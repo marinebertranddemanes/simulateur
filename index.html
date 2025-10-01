@@ -18,12 +18,14 @@
       font-family: 'Montserrat', Arial, sans-serif;
     }
 
+    /* Résultats en colonnes (desktop/tablette) */
     #resultats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
 
+    /* Cartes projets */
     .projet-card {
       background: #fff;
       border: 1px solid #eee;
@@ -52,17 +54,81 @@
     .ok-card { background:#f0fdf4; border:2px solid #4CAF50; }
     .nok-card { background:#fff5f5; border:2px solid #c62828; }
 
-    .tabs { display:none; }
-    .tab-btn.active { background:#0b1d2d; color:#fff; }
-    .tab-content { display:none; }
-    .tab-content.active { display:block; }
-
-    @media (max-width:1024px) {
-      #resultats { grid-template-columns: repeat(2, 1fr); }
+    /* Onglets (mobile) */
+    .tabs {
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0 30px;
+      flex-wrap: wrap;
+      display: none; /* masqué par défaut (sauf mobile) */
     }
-    @media (max-width:768px) {
-      #resultats { display:none; }
-      .tabs, #tabContents { display:block; }
+
+    .tab-btn {
+      padding: 10px 20px;
+      border: 2px solid #0b1d2d;
+      border-radius: 20px;
+      background: #fff;
+      color: #0b1d2d;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      background: #0b1d2d;
+      color: #fff;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      #resultats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ✅ Desktop : colonnes | Mobile : onglets */
+    #tabContents { display: none; }
+
+    @media (max-width: 768px) {
+      #simForm {
+        grid-template-columns: 1fr !important;
+      }
+      #simForm div {
+        grid-column: span 1 !important;
+      }
+
+      #resultats { display: none; }
+      .tabs, #tabContents { display: block; }
+
+      .tabs {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        margin: 15px 0 25px;
+      }
+
+      .tab-btn {
+        width: 100%;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      section { padding: 40px 15px !important; }
+      h2 { font-size: 22px !important; }
+      button { font-size: 14px !important; padding: 12px 20px !important; }
     }
   </style>
 </head>
@@ -76,36 +142,41 @@
     </h2>
 
     <!-- Formulaire -->
-    <div style="background:#fff; border:1px solid #ddd; border-radius:16px; padding:40px; margin-bottom:30px;">
-      <form id="simForm" style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
+    <div style="background:#fff; border:1px solid #ddd; border-radius:16px; padding:40px; margin-bottom:30px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
+      <form id="simForm" style="display:grid; grid-template-columns:1fr 1fr; gap:30px; text-align:left;">
         <div>
-          <label>Revenus nets annuels du foyer (€)</label><br>
-          <input type="number" id="revenus" placeholder="ex : 68 000">
+          <label style="font-weight:600;">Revenus nets annuels du foyer (€)</label><br>
+          <input type="number" id="revenus" placeholder="ex : 68 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
         <div>
-          <label>Charges du foyer (€ / mois)</label><br>
-          <input type="number" id="charges" placeholder="ex : 950">
+          <label style="font-weight:600;">Charges du foyer (€ / mois)</label><br>
+          <input type="number" id="charges" placeholder="ex : 950" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
         <div>
-          <label>Âge de la personne la + âgée</label><br>
-          <input type="number" id="age" placeholder="ex : 45">
+          <label style="font-weight:600;">Âge de la personne la + âgée qui empruntera</label><br>
+          <input type="number" id="age" placeholder="ex : 45" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
         <div>
-          <label>Apport prêt à mettre (€)</label><br>
-          <input type="number" id="apport" placeholder="ex : 20 000">
+          <label style="font-weight:600;">Apport prêt à mettre (€)</label><br>
+          <input type="number" id="apport" placeholder="ex : 20 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
-        <div style="grid-column:span 2; text-align:center;">
-          <button type="button" onclick="calculerSimulation()">Définir mon projet d’investissement →</button>
+        <div style="grid-column:span 2; text-align:center; margin-top:20px;">
+          <button type="button" onclick="calculerSimulation()" style="background:#d9c9a3; color:#0b1d2d; padding:14px 28px; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:16px; box-shadow:0 3px 6px rgba(0,0,0,0.15);">
+            Définir mon projet d’investissement →
+          </button>
         </div>
       </form>
     </div>
 
     <!-- Mention globale -->
-    <div id="mentionGlobale" style="display:none; margin-bottom:25px; padding:15px; background:#fff8e6; border:1px solid #d9c9a3; border-radius:8px; text-align:center;">
-      ⚠️ Les montants ci-dessous sont indicatifs. Le cabinet affine votre budget et vos mensualités.
+    <div id="mentionGlobale" style="display:none; margin-bottom:25px; padding:15px; background:#fff8e6; border:1px solid #d9c9a3; border-radius:8px; text-align:center; font-size:16px; font-style:italic; font-weight:500; color:#0b1d2d;">
+      ⚠️ Les montants ci-dessous sont indicatifs. Le cabinet affine votre budget et vos mensualités en intégrant fiscalité, stratégie patrimoniale et négociation bancaire.
     </div>
 
+    <!-- Résultats desktop/tablette -->
     <div id="resultats"></div>
+
+    <!-- Résultats mobile (onglets) -->
     <div id="tabs" class="tabs"></div>
     <div id="tabContents"></div>
 
@@ -132,53 +203,95 @@ function calculerSimulation() {
   ];
 
   document.getElementById("mentionGlobale").style.display = "block";
-  document.getElementById("resultats").innerHTML = "";
-  document.getElementById("tabs").innerHTML = "";
-  document.getElementById("tabContents").innerHTML = "";
+
+  const container = document.getElementById("resultats");
+  container.innerHTML = "";
+
+  const tabs = document.getElementById("tabs");
+  const contents = document.getElementById("tabContents");
+  tabs.innerHTML = "";
+  contents.innerHTML = "";
 
   scenarios.forEach((sc, idx) => {
-    let colHTML = `<div><h3>${sc.nom}</h3>`;
+    let colHTML = `<div><h3 style="text-align:center; color:#0b1d2d;">${sc.nom}</h3>`;
     projets.forEach((projet) => { colHTML += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport); });
     colHTML += `</div>`;
-    document.getElementById("resultats").innerHTML += colHTML;
+    container.innerHTML += colHTML;
 
     const tabBtn = document.createElement("button");
     tabBtn.className = "tab-btn" + (idx === 0 ? " active" : "");
     tabBtn.innerText = sc.nom;
     tabBtn.onclick = () => showTab(idx);
-    document.getElementById("tabs").appendChild(tabBtn);
+    tabs.appendChild(tabBtn);
 
     let html = `<div class="tab-content ${idx === 0 ? "active" : ""}" id="tab-${idx}">`;
     projets.forEach((projet) => { html += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport); });
     html += `</div>`;
-    document.getElementById("tabContents").innerHTML += html;
+    contents.innerHTML += html;
   });
 }
 
 function getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport) {
   const capaciteMensuelle = ((revenusMensuels + projet.loyer*0.7) * 0.35) - chargesMensuelles;
   if (capaciteMensuelle <= 0) {
-    return `<div class="projet-card nok-card"><div class="badge nok">❌ Non possible</div><h4>${projet.titre}</h4><p>Revenus trop faibles</p></div>`;
+    return `
+      <div class="projet-card nok-card">
+        <div class="badge nok">❌ Non possible</div>
+        <h4>${projet.titre}</h4>
+        <p style="margin-top:10px; font-size:13px; color:#555; font-style:italic; text-align:center;">
+          <a href="mailto:contact@bertrand-demanes.fr?subject=Demande d'informations concernant mon projet | Cabinet Bertrand-Demanes"
+             style="color:#0b1d2d; font-weight:600; text-decoration:none;">
+             Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
+          </a>
+        </p>
+      </div>`;
   }
 
   const tauxMensuel = sc.taux / 12;
   const capital = capaciteMensuelle * (1 - Math.pow(1 + tauxMensuel, -sc.duree)) / tauxMensuel;
   const budgetTotal = capital + apport;
 
-  if (budgetTotal >= projet.min * 0.995) {
-    return `<div class="projet-card ok-card">
-      <div class="badge ok">✅ Projet possible</div>
-      <h4>${projet.titre}</h4>
-      <p>Budget total ≈ ${(Math.round(budgetTotal/5000)*5000).toLocaleString("fr-FR")} €</p>
-      <div style="text-align:center; margin-top:12px;">
-        <a href="${projet.pdf}" target="_blank" rel="noopener noreferrer"
-           style="padding:10px 18px; background:#0b1d2d; color:#fff; border-radius:6px; text-decoration:none; font-weight:600;">
-           Voir un exemple
-        </a>
-      </div>
-    </div>`;
+  if (budgetTotal >= projet.min * 0.995) {  // ✅ tolérance de 0,5%
+    return `
+      <div class="projet-card ok-card">
+        <div class="badge ok">✅ Projet possible</div>
+        <h4>${projet.titre}</h4>
+        <p>
+          Capacité de financement estimée : ≈ ${(Math.round(capital/5000)*5000).toLocaleString("fr-FR")} €<br>
+          Apport : ${apport.toLocaleString("fr-FR")} €<br>
+          <span style="display:inline-block; margin-top:6px; font-size:18px; font-weight:700; color:#2e7d32;">
+            👉 Budget total ≈ ${(Math.round(budgetTotal/5000)*5000).toLocaleString("fr-FR")} €
+          </span>
+        </p>
+        <div style="text-align:center; margin-top:12px;">
+          <a href="${projet.pdf}" target="_blank" rel="noopener noreferrer"
+             style="display:inline-block; padding:10px 18px; background:#0b1d2d; color:#fff; border-radius:6px; text-decoration:none; font-weight:600;">
+            Voir un exemple
+          </a>
+          <p style="margin-top:10px; font-size:13px; color:#555; font-style:italic;">
+            <a href="mailto:contact@bertrand-demanes.fr?subject=Demande d'informations concernant mon projet | Cabinet Bertrand-Demanes"
+               style="color:#0b1d2d; font-weight:600; text-decoration:none;">
+               Demandez une étude personnalisée avec le cabinet
+            </a>
+          </p>
+        </div>
+      </div>`;
   } else {
-    return `<div class="projet-card nok-card"><div class="badge nok">❌ Non possible</div><h4>${projet.titre}</h4><p>Il manquerait ≈ ${(projet.min - budgetTotal).toLocaleString("fr-FR")} €</p></div>`;
+    const manque = Math.round((projet.min - budgetTotal)/5000)*5000;
+    return `
+      <div class="projet-card nok-card">
+        <div class="badge nok">❌ Non possible</div>
+        <h4>${projet.titre}</h4>
+        <p style="color:#c00; text-align:center; font-weight:600;">
+          Il manquerait ≈ ${manque.toLocaleString("fr-FR")} € pour ce projet
+        </p>
+        <p style="margin-top:10px; font-size:13px; color:#555; font-style:italic; text-align:center;">
+          <a href="mailto:contact@bertrand-demanes.fr?subject=Demande d'informations concernant mon projet | Cabinet Bertrand-Demanes"
+             style="color:#0b1d2d; font-weight:600; text-decoration:none;">
+             Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
+          </a>
+        </p>
+      </div>`;
   }
 }
 
