@@ -432,14 +432,9 @@ function showTab(index) {
   });
 }
 
-/* ✅ Fonction pour ouvrir le pop-in contact */
+/* ✅ Envoi d’un message au parent (WordPress) */
 function ouvrirContact() {
-  const boutonContact = document.querySelector('#contact-button');
-  if (boutonContact) {
-    boutonContact.click();
-  } else {
-    console.error("Bouton contact introuvable !");
-  }
+  parent.postMessage({ action: 'openContact' }, '*');
 }
 </script>
 
