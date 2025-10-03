@@ -277,12 +277,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-5KZQFS');</script>
 <!-- End Google Tag Manager -->
+
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KZQFS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
+
 <section>
   <div style="max-width:1200px; margin:0 auto;">
 
@@ -307,11 +310,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <label>Apport prêt à mettre (€)</label><br>
           <input type="number" id="apport" placeholder="ex : 20 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
-        <div style="grid-column:span 2; text-align:center; margin-top:20px;">
-          <button type="button" onclick="calculerSimulation()" style="background:#d9c9a3; color:#0b1d2d; padding:14px 28px; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:16px;">
-            Définir mon projet →
-          </button>
-        </div>
+<!-- ✅ Message RGPD (collé au bouton) -->
+<div style="grid-column:span 2; text-align:center; margin:6px 0 0; font-size:11px; font-style:italic; color:#777;">
+  Vos données sont utilisées uniquement de façon anonyme pour des statistiques. 
+  Aucune donnée nominative n’est enregistrée ni envoyée à des tiers.
+</div>
+
+<!-- Bouton -->
+<div style="grid-column:span 2; text-align:center; margin-top:2px;">
+  <button type="button" onclick="calculerSimulation()" 
+    style="background:#d9c9a3; color:#0b1d2d; padding:14px 28px; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:16px; margin-top:0;">
+    Définir mon projet →
+  </button>
+</div>
       </form>
     </div>
 
