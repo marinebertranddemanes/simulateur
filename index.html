@@ -236,11 +236,11 @@
           <input type="number" id="revenus" placeholder="ex : 68 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
         <div>
-          <label>Charges du foyer : loyer et/ou prêt(s) en cours (€ / mois)</label><br>
+          <label>Charges du foyer (€ / mois)</label><br>
           <input type="number" id="charges" placeholder="ex : 950" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
         <div>
-          <label>Âge de la personne la + âgée qui empruntera</label><br>
+          <label>Âge de la personne la + âgée</label><br>
           <input type="number" id="age" placeholder="ex : 45" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
         <div>
@@ -403,14 +403,14 @@ function envoyerDonneesGoogleSheet() {
   const age = document.getElementById("age").value;
   const apport = document.getElementById("apport").value;
 
-fetch("https://script.google.com/macros/s/AKfycbx5jKLtamOY9yShE0RakYqBlojxnZJ7D6o4HPJ9bKhksxj52cUSxDm5BiQid7Oi/exec", {
-  method: "POST",
-  mode: "no-cors",   // 👈 important
-  body: JSON.stringify({ revenus, charges, age, apport }),
-  headers: { "Content-Type": "application/json" }
-})
-.then(res => console.log("✅ Données envoyées"))
-.catch(err => console.error("❌ Erreur fetch :", err));
+  fetch("https://script.google.com/macros/s/AKfycbz6iMJnuyPxuKyNiHPKhSJRnb5ipFBj5XeBl9eFR3Qv6Uxu-ZXnovnarzTdhUcC3Mmn/exec", {
+    method: "POST",
+    mode: "no-cors",   // 👈 important
+    body: JSON.stringify({ revenus, charges, age, apport }),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(() => console.log("✅ Données envoyées"))
+  .catch(err => console.error("❌ Erreur fetch :", err));
 }
 </script>
 
