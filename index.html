@@ -83,7 +83,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* --- Carte projet (Possible) --- */
+    /* --- Carte projet --- */
     .projet-card {
       background: #f9fdfb;
       border: 2px solid #4CAF50;
@@ -95,13 +95,11 @@
       position: relative;
     }
 
-    /* Carte impossible */
     .projet-card.nok-card {
       background: #fff6f6;
       border: 2px solid #c62828;
     }
 
-    /* Badge */
     .badge {
       position: absolute;
       top: -16px;
@@ -132,7 +130,6 @@
       color: #0b1d2d;
     }
 
-    /* Bloc budget */
     .projet-budget {
       background: linear-gradient(135deg, #0b1d2d, #A2B08F);
       color: #fff;
@@ -149,7 +146,6 @@
       margin-top: 5px;
     }
 
-    /* Bloc détail financement centré */
     .projet-details {
       background: #f2f4f8;
       border-left: 6px solid #4CAF50;
@@ -158,7 +154,6 @@
       margin-bottom: 14px;
       font-size: 14px;
       line-height: 1.4;
-
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -172,16 +167,14 @@
       margin: 0 0 6px 0;
       color: #0b1d2d;
     }
-    .projet-details p {
-      margin: 2px 0;
-    }
+    .projet-details p { margin: 2px 0; }
+
     .projet-card.nok-card .projet-details {
       border-left: 6px solid #c62828;
       background: #f7f9fc;
       text-align: center;
     }
 
-    /* Bouton principal */
     .projet-card .btn-main {
       display: block;
       width: calc(100% - 40px);
@@ -189,21 +182,18 @@
       padding: 12px;
       border-radius: 30px;
       text-align: center;
-      box-sizing: border-box;
       background: #0b1d2d;
       color: #fff;
       text-decoration: none;
       font-weight: 600;
-      transition: 0.3s;
       border: 2px solid #0b1d2d;
+      transition: 0.3s;
     }
     .projet-card .btn-main:hover {
       background: #fff;
       color: #0b1d2d;
-      border: 2px solid #0b1d2d;
     }
 
-    /* Bouton secondaire */
     .projet-card .btn-alt {
       display: block;
       width: calc(100% - 40px);
@@ -211,13 +201,10 @@
       padding: 12px;
       border-radius: 30px;
       text-align: center;
-      box-sizing: border-box;
       border: 2px solid #0b1d2d;
-      border-left: 6px solid #0b1d2d;
       color: #0b1d2d;
-      text-decoration: none;
-      font-weight: 600;
       background: #fff;
+      font-weight: 600;
       transition: 0.3s;
     }
     .projet-card .btn-alt:hover {
@@ -225,66 +212,16 @@
       color: #fff;
     }
 
-    /* --- Mobile optimisations --- */
     @media (max-width: 768px) {
-      /* Formulaire en 1 colonne */
       #simForm {
         grid-template-columns: 1fr !important;
         gap: 20px;
       }
-      #simForm div {
-        grid-column: span 1 !important;
-      }
-
-      /* Cartes plus compactes */
-      .projet-card {
-        padding: 16px;
-        border-radius: 14px;
-        margin-bottom: 20px;
-      }
-      .projet-card h4 {
-        font-size: 18px;
-        margin: 20px 0 14px;
-      }
-      .projet-budget {
-        font-size: 16px;
-        padding: 14px;
-      }
-      .projet-budget span {
-        font-size: 20px;
-      }
-      .projet-details {
-        font-size: 13px;
-        padding: 10px 12px;
-        min-height: 70px;
-      }
-      .projet-details h5 {
-        font-size: 12px;
-        margin-bottom: 4px;
-      }
-      .projet-card .btn-main,
-      .projet-card .btn-alt {
-        width: 100%;
-        font-size: 14px;
-        padding: 10px;
-      }
+      #simForm div { grid-column: span 1 !important; }
     }
   </style>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5KZQFS');</script>
-<!-- End Google Tag Manager -->
-
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KZQFS"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
 
 <section>
   <div style="max-width:1200px; margin:0 auto;">
@@ -310,26 +247,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <label>Apport prêt à mettre (€)</label><br>
           <input type="number" id="apport" placeholder="ex : 20 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
-<!-- ✅ Message RGPD (collé au bouton) -->
-<div style="grid-column:span 2; text-align:center; margin:6px 0 0; font-size:11px; font-style:italic; color:#777;">
-  Vos données sont utilisées uniquement de façon anonyme pour des statistiques. 
-  Aucune donnée nominative n’est enregistrée ni envoyée à des tiers.
-</div>
 
-<!-- Bouton -->
-<div style="grid-column:span 2; text-align:center; margin-top:2px;">
-  <button type="button" onclick="calculerSimulation()" 
-    style="background:#d9c9a3; color:#0b1d2d; padding:14px 28px; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:16px; margin-top:0;">
-    Définir mon projet →
-  </button>
-</div>
+        <!-- ✅ Message RGPD -->
+        <div style="grid-column:span 2; text-align:center; margin:6px 0 0; font-size:11px; font-style:italic; color:#777;">
+          Vos données sont utilisées uniquement de façon anonyme pour des statistiques. 
+          Aucune donnée nominative n’est enregistrée ni envoyée à des tiers.
+        </div>
+
+        <!-- ✅ Bouton -->
+        <div style="grid-column:span 2; text-align:center; margin-top:2px;">
+          <button type="button" onclick="calculerSimulation(); envoyerDonneesGoogleSheet()" 
+            style="background:#d9c9a3; color:#0b1d2d; padding:14px 28px; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:16px; margin-top:0;">
+            Définir mon projet →
+          </button>
+        </div>
       </form>
     </div>
 
-    <!-- Résultats desktop -->
+    <!-- Résultats -->
     <div id="resultats"></div>
-
-    <!-- Résultats mobile (onglets) -->
     <div id="tabs" class="tabs"></div>
     <div id="tabContents"></div>
 
@@ -363,7 +299,6 @@ function calculerSimulation() {
   contents.innerHTML = "";
 
   scenarios.forEach((sc, idx) => {
-    // Desktop
     let colHTML = `<div><h3>${sc.nom}</h3>`;
     projets.forEach((projet) => {
       colHTML += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport);
@@ -371,7 +306,6 @@ function calculerSimulation() {
     colHTML += `</div>`;
     container.innerHTML += colHTML;
 
-    // Mobile
     const tabBtn = document.createElement("button");
     tabBtn.className = "tab-btn" + (idx === 0 ? " active" : "");
     tabBtn.innerText = sc.nom;
@@ -453,7 +387,6 @@ function showTab(index) {
   });
 }
 
-/* ✅ Fonction pour ouvrir le pop-in contact */
 function ouvrirContact() {
   const boutonContact = document.querySelector('#contact-button');
   if (boutonContact) {
@@ -461,6 +394,22 @@ function ouvrirContact() {
   } else {
     console.error("Bouton contact introuvable !");
   }
+}
+
+/* ✅ Fonction pour envoyer les données dans Google Sheets */
+function envoyerDonneesGoogleSheet() {
+  const revenus = document.getElementById("revenus").value;
+  const charges = document.getElementById("charges").value;
+  const age = document.getElementById("age").value;
+  const apport = document.getElementById("apport").value;
+
+  fetch("https://script.google.com/a/macros/bertrand-demanes.fr/s/AKfycbz26FKKDo8swfOor2kteSHX7M9NRTU1Bijle80HA3tM83yq0K4KGU6isg1CZAjz7YPY/exec", {
+    method: "POST",
+    body: JSON.stringify({ revenus, charges, age, apport }),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => console.log("✅ Données envoyées :", res.status))
+  .catch(err => console.error("❌ Erreur :", err));
 }
 </script>
 
