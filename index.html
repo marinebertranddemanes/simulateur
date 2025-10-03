@@ -403,12 +403,13 @@ function envoyerDonneesGoogleSheet() {
   const age = document.getElementById("age").value;
   const apport = document.getElementById("apport").value;
 
-  fetch("https://script.google.com/a/macros/bertrand-demanes.fr/s/AKfycbz26FKKDo8swfOor2kteSHX7M9NRTU1Bijle80HA3tM83yq0K4KGU6isg1CZAjz7YPY/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbymJccyFKBRzNPxEFeTH7iLvCMhNd5SSy3CVBkhDiLehnVSddQsm4Ay1h9RjjgfxXcf/exec", {
     method: "POST",
     body: JSON.stringify({ revenus, charges, age, apport }),
     headers: { "Content-Type": "application/json" }
   })
-  .then(res => console.log("✅ Données envoyées :", res.status))
+  .then(res => res.text())
+  .then(txt => console.log("✅ Réponse serveur :", txt))
   .catch(err => console.error("❌ Erreur :", err));
 }
 </script>
