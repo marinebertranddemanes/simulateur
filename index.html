@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Simulateur investissement locatif – Bertrand-Demanes</title>
 
   <!-- ✅ Google Tag Manager (HEAD) -->
@@ -15,7 +15,7 @@
   <!-- ✅ Fin GTM HEAD -->
 
   <!-- Police Montserrat -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
     body { margin:0; padding:0; font-family:'Montserrat', Arial, sans-serif; background:#f9f9fb; }
@@ -62,231 +62,270 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KZQFS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- ✅ Fin GTM BODY -->
 
-<section>
-  <div style="max-width:1200px; margin:0 auto;">
+  <section>
+    <div style="max-width:1200px; margin:0 auto;">
 
-    <h2>Définir mon projet d’investissement locatif</h2>
+      <h2>Définir mon projet d’investissement locatif</h2>
 
-    <!-- Formulaire -->
-    <div style="background:#fff; border:1px solid #ddd; border-radius:16px; padding:40px; margin-bottom:30px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
-      <form id="simForm" style="display:grid; grid-template-columns:1fr 1fr; gap:30px; text-align:left;">
-        <div>
-          <label>Revenus nets annuels du foyer (€)</label><br>
-          <input type="number" id="revenus" placeholder="ex : 68 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
-        </div>
-        <div>
-          <label>Charges du foyer : loyer et/ou prêt(s) en cours (€ / mois)</label><br>
-          <input type="number" id="charges" placeholder="ex : 950" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
-        </div>
-        <div>
-          <label>Âge de la personne la + âgée qui empruntera</label><br>
-          <input type="number" id="age" placeholder="ex : 45" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
-        </div>
-        <div>
-          <label>Apport prêt à mettre (€)</label><br>
-          <input type="number" id="apport" placeholder="ex : 20 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
-        </div>
+      <!-- Formulaire -->
+      <div style="background:#fff; border:1px solid #ddd; border-radius:16px; padding:40px; margin-bottom:30px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
+        <form id="simForm" style="display:grid; grid-template-columns:1fr 1fr; gap:30px; text-align:left;">
+          <div>
+            <label>Revenus nets annuels du foyer (€)</label><br />
+            <input type="number" id="revenus" placeholder="ex : 68 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
+          </div>
+          <div>
+            <label>Charges du foyer : loyer et/ou prêt(s) en cours (€ / mois)</label><br />
+            <input type="number" id="charges" placeholder="ex : 950" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
+          </div>
+          <div>
+            <label>Âge de la personne la + âgée qui empruntera</label><br />
+            <input type="number" id="age" placeholder="ex : 45" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
+          </div>
+          <div>
+            <label>Apport prêt à mettre (€)</label><br />
+            <input type="number" id="apport" placeholder="ex : 20 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
+          </div>
 
-        <!-- ✅ Message RGPD -->
-        <div style="grid-column:span 2; text-align:center; margin:6px 0 0; font-size:11px; font-style:italic; color:#777;">
-          Vos données sont utilisées uniquement de façon anonyme pour des statistiques. 
-          Aucune donnée nominative n’est enregistrée ni envoyée à des tiers.
-        </div>
+          <!-- ✅ Message RGPD -->
+          <div style="grid-column:span 2; text-align:center; margin:6px 0 0; font-size:11px; font-style:italic; color:#777;">
+            Vos données sont utilisées uniquement de façon anonyme pour des statistiques. 
+            Aucune donnée nominative n’est enregistrée ni envoyée à des tiers.
+          </div>
 
-        <!-- ✅ Bouton -->
-        <div style="grid-column:span 2; text-align:center; margin-top:2px;">
-          <button type="button"
-            onclick="trackDefinirProjet(); calculerSimulation(); envoyerDonneesGoogleSheet()"
-            style="background:#d9c9a3; color:#0b1d2d; padding:14px 28px; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:16px; margin-top:0;">
-            Définir mon projet →
-          </button>
-        </div>
-      </form>
+          <!-- ✅ Bouton -->
+          <div style="grid-column:span 2; text-align:center; margin-top:2px;">
+            <button type="button"
+              onclick="handleSubmit()"
+              style="background:#d9c9a3; color:#0b1d2d; padding:14px 28px; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:16px; margin-top:0;">
+              Définir mon projet →
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Résultats -->
+      <div id="resultats"></div>
+      <div id="tabs" class="tabs"></div>
+      <div id="tabContents"></div>
+
     </div>
+  </section>
 
-    <!-- Résultats -->
-    <div id="resultats"></div>
-    <div id="tabs" class="tabs"></div>
-    <div id="tabContents"></div>
+  <script>
+  /* ====== CONFIG ====== */
+  // URL Google Apps Script — utilisée uniquement en fallback quand la page N'EST PAS dans un iframe
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbz6iMJnuyPxuKyNiHPKhSJRnb5ipFBj5XeBl9eFR3Qv6Uxu-ZXnovnarzTdhUcC3Mmn/exec";
+  // (Optionnel) sécuriser le postMessage : mets ici ton domaine WordPress exact (ex: "https://www.bertrand-demanes.fr")
+  const PARENT_ALLOWED_ORIGIN = "*"; // remplace par "https://www.bertrand-demanes.fr" si tu veux restreindre
 
-  </div>
-</section>
+  /* ====== HELPERS ====== */
+  function inIframe(){ try { return window.self !== window.top; } catch(e){ return true; } }
 
-<script>
-/* --------- Helpers tracking --------- */
-function track(eventName, params){
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push(Object.assign({ event: eventName }, params || {}));
-}
-
-/* --------- Calcul + rendu --------- */
-function calculerSimulation() {
-  const revenusAnnuel = parseFloat(document.getElementById("revenus").value) || 0;
-  const chargesMensuelles = parseFloat(document.getElementById("charges").value) || 0;
-  const apport = parseFloat(document.getElementById("apport").value) || 0;
-  const revenusMensuels = revenusAnnuel / 12;
-
-  const projets = [
-    { id: 1, titre: "Projet Studio", loyer: 575, min: 140000, pdf: "https://marinebertranddemanes.github.io/simulateur/pdf/studio.pdf" },
-    { id: 2, titre: "Projet T2", loyer: 725, min: 160000, pdf: "https://marinebertranddemanes.github.io/simulateur/pdf/t2.pdf" },
-    { id: 3, titre: "Projet Colocation", loyer: 2000, min: 270000, pdf: "https://marinebertranddemanes.github.io/simulateur/pdf/colocation.pdf" }
-  ];
-
-  const scenarios = [
-    { nom: "Emprunt sur 15 ans", duree: 15*12, taux: 0.0342 },
-    { nom: "Emprunt sur 20 ans", duree: 20*12, taux: 0.0362 },
-    { nom: "Emprunt sur 25 ans", duree: 25*12, taux: 0.0382 }
-  ];
-
-  const container = document.getElementById("resultats");
-  const tabs = document.getElementById("tabs");
-  const contents = document.getElementById("tabContents");
-  container.innerHTML = "";
-  tabs.innerHTML = "";
-  contents.innerHTML = "";
-
-  scenarios.forEach((sc, idx) => {
-    let colHTML = `<div><h3>${sc.nom}</h3>`;
-    projets.forEach((projet) => {
-      colHTML += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport);
-    });
-    colHTML += `</div>`;
-    container.innerHTML += colHTML;
-
-    const tabBtn = document.createElement("button");
-    tabBtn.className = "tab-btn" + (idx === 0 ? " active" : "");
-    tabBtn.innerText = sc.nom;
-    tabBtn.onclick = () => showTab(idx);
-    tabs.appendChild(tabBtn);
-
-    let html = `<div class="tab-content ${idx === 0 ? "active fade-in" : ""}" id="tab-${idx}"><h3>${sc.nom}</h3>`;
-    projets.forEach((projet) => {
-      html += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport);
-    });
-    html += `</div>`;
-    contents.innerHTML += html;
-  });
-}
-
-function getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport) {
-  const capaciteMensuelle = ((revenusMensuels + projet.loyer*0.7) * 0.35) - chargesMensuelles;
-  if (capaciteMensuelle <= 0) {
-    return `
-      <div class="projet-card nok-card">
-        <div class="badge nok">Impossible</div>
-        <h4>${projet.titre}</h4>
-        <div class="projet-details">
-          <p>Votre situation actuelle ne permet pas ce projet.</p>
-        </div>
-        <a href="#" onclick="trackContactCTA('${projet.titre}','${sc.nom}'); ouvrirContact(); return false;" class="btn-alt">
-          Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
-        </a>
-      </div>`;
+  function track(eventName, params){
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: eventName }, params || {}));
   }
 
-  const tauxMensuel = sc.taux / 12;
-  const capital = capaciteMensuelle * (1 - Math.pow(1 + tauxMensuel, -sc.duree)) / tauxMensuel;
-  const budgetTotal = capital + apport;
-  const budgetArrondi = Math.round(budgetTotal/5000)*5000;
-  const capitalArrondi = Math.round(capital/5000)*5000;
+  /* ====== CALCUL + RENDU ====== */
+  function calculerSimulation() {
+    const revenusAnnuel = parseFloat(document.getElementById("revenus").value) || 0;
+    const chargesMensuelles = parseFloat(document.getElementById("charges").value) || 0;
+    const apport = parseFloat(document.getElementById("apport").value) || 0;
+    const revenusMensuels = revenusAnnuel / 12;
 
-  if (budgetTotal >= projet.min * 0.995) {
-    return `
-      <div class="projet-card">
-        <div class="badge ok">Possible</div>
-        <h4>${projet.titre}</h4>
-        <div class="projet-budget">
-          Budget total disponible
-          <span>${budgetArrondi.toLocaleString("fr-FR")} €</span>
-        </div>
-        <div class="projet-details">
-          <h5>DÉTAIL DU FINANCEMENT</h5>
-          <p>Capacité d'emprunt : ${capitalArrondi.toLocaleString("fr-FR")} €</p>
-          <p>Votre apport personnel : ${apport.toLocaleString("fr-FR")} €</p>
-        </div>
-        <a href="${projet.pdf}" target="_blank" class="btn-main"
-           onclick="trackVoirExemple('${projet.titre}','${sc.nom}', ${budgetArrondi});">
-           Voir un exemple
-        </a>
-        <a href="#" onclick="trackContactCTA('${projet.titre}','${sc.nom}'); ouvrirContact(); return false;" class="btn-alt">
-          Demander une étude personnalisée au cabinet
-        </a>
-      </div>`;
-  } else {
-    const manque = Math.round((projet.min - budgetTotal)/5000)*5000;
-    return `
-      <div class="projet-card nok-card">
-        <div class="badge nok">Impossible</div>
-        <h4>${projet.titre}</h4>
-        <div class="projet-details">
-          <p>Il manquerait ≈ ${manque.toLocaleString("fr-FR")} € pour ce projet</p>
-        </div>
-        <a href="#" onclick="trackContactCTA('${projet.titre}','${sc.nom}'); ouvrirContact(); return false;" class="btn-alt">
-          Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
-        </a>
-      </div>`;
+    const projets = [
+      { id: 1, titre: "Projet Studio", loyer: 575, min: 140000, pdf: "https://marinebertranddemanes.github.io/simulateur/pdf/studio.pdf" },
+      { id: 2, titre: "Projet T2", loyer: 725, min: 160000, pdf: "https://marinebertranddemanes.github.io/simulateur/pdf/t2.pdf" },
+      { id: 3, titre: "Projet Colocation", loyer: 2000, min: 270000, pdf: "https://marinebertranddemanes.github.io/simulateur/pdf/colocation.pdf" }
+    ];
+
+    const scenarios = [
+      { nom: "Emprunt sur 15 ans", duree: 15*12, taux: 0.0342 },
+      { nom: "Emprunt sur 20 ans", duree: 20*12, taux: 0.0362 },
+      { nom: "Emprunt sur 25 ans", duree: 25*12, taux: 0.0382 }
+    ];
+
+    const container = document.getElementById("resultats");
+    const tabs = document.getElementById("tabs");
+    const contents = document.getElementById("tabContents");
+    container.innerHTML = "";
+    tabs.innerHTML = "";
+    contents.innerHTML = "";
+
+    scenarios.forEach((sc, idx) => {
+      let colHTML = `<div><h3>${sc.nom}</h3>`;
+      projets.forEach((projet) => {
+        colHTML += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport);
+      });
+      colHTML += `</div>`;
+      container.innerHTML += colHTML;
+
+      const tabBtn = document.createElement("button");
+      tabBtn.className = "tab-btn" + (idx === 0 ? " active" : "");
+      tabBtn.innerText = sc.nom;
+      tabBtn.onclick = () => showTab(idx);
+      tabs.appendChild(tabBtn);
+
+      let html = `<div class="tab-content ${idx === 0 ? "active fade-in" : ""}" id="tab-${idx}"><h3>${sc.nom}</h3>`;
+      projets.forEach((projet) => {
+        html += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport);
+      });
+      html += `</div>`;
+      contents.innerHTML += html;
+    });
   }
-}
 
-function showTab(index) {
-  document.querySelectorAll(".tab-btn").forEach((btn, i) => {
-    btn.classList.toggle("active", i === index);
-  });
-  document.querySelectorAll(".tab-content").forEach((tab, i) => {
-    tab.classList.toggle("active", i === index);
-    tab.classList.remove("fade-in");
-    if (i === index) {
-      setTimeout(() => tab.classList.add("fade-in"), 10);
+  function getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport) {
+    const capaciteMensuelle = ((revenusMensuels + projet.loyer*0.7) * 0.35) - chargesMensuelles;
+    if (capaciteMensuelle <= 0) {
+      return `
+        <div class="projet-card nok-card">
+          <div class="badge nok">Impossible</div>
+          <h4>${projet.titre}</h4>
+          <div class="projet-details">
+            <p>Votre situation actuelle ne permet pas ce projet.</p>
+          </div>
+          <a href="#" onclick="trackContactCTA('${projet.titre}','${sc.nom}'); ouvrirContact(); return false;" class="btn-alt">
+            Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
+          </a>
+        </div>`;
     }
-  });
-}
 
-/* ✅ Communication avec le parent WordPress */
-function ouvrirContact() {
-  window.parent.postMessage({ action: "openContact" }, "*");
-}
+    const tauxMensuel = sc.taux / 12;
+    const capital = capaciteMensuelle * (1 - Math.pow(1 + tauxMensuel, -sc.duree)) / tauxMensuel;
+    const budgetTotal = capital + apport;
+    const budgetArrondi = Math.round(budgetTotal/5000)*5000;
+    const capitalArrondi = Math.round(capital/5000)*5000;
 
-/* ✅ Tracking dédié */
-function trackDefinirProjet(){
-  const revenus = parseFloat(document.getElementById("revenus").value)||0;
-  const charges = parseFloat(document.getElementById("charges").value)||0;
-  const age     = parseFloat(document.getElementById("age").value)||0;
-  const apport  = parseFloat(document.getElementById("apport").value)||0;
-  track('simulateur_definir_projet', {
-    revenus_annuel: revenus,
-    charges_mensuelles: charges,
-    age: age,
-    apport: apport
-  });
-}
+    if (budgetTotal >= projet.min * 0.995) {
+      return `
+        <div class="projet-card">
+          <div class="badge ok">Possible</div>
+          <h4>${projet.titre}</h4>
+          <div class="projet-budget">
+            Budget total disponible
+            <span>${budgetArrondi.toLocaleString("fr-FR")} €</span>
+          </div>
+          <div class="projet-details">
+            <h5>DÉTAIL DU FINANCEMENT</h5>
+            <p>Capacité d'emprunt : ${capitalArrondi.toLocaleString("fr-FR")} €</p>
+            <p>Votre apport personnel : ${apport.toLocaleString("fr-FR")} €</p>
+          </div>
+          <a href="${projet.pdf}" target="_blank" class="btn-main"
+            onclick="trackVoirExemple('${projet.titre}','${sc.nom}', ${budgetArrondi});">
+            Voir un exemple
+          </a>
+          <a href="#" onclick="trackContactCTA('${projet.titre}','${sc.nom}'); ouvrirContact(); return false;" class="btn-alt">
+            Demander une étude personnalisée au cabinet
+          </a>
+        </div>`;
+    } else {
+      const manque = Math.round((projet.min - budgetTotal)/5000)*5000;
+      return `
+        <div class="projet-card nok-card">
+          <div class="badge nok">Impossible</div>
+          <h4>${projet.titre}</h4>
+          <div class="projet-details">
+            <p>Il manquerait ≈ ${manque.toLocaleString("fr-FR")} € pour ce projet</p>
+          </div>
+          <a href="#" onclick="trackContactCTA('${projet.titre}','${sc.nom}'); ouvrirContact(); return false;" class="btn-alt">
+            Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
+          </a>
+        </div>`;
+    }
+  }
 
-function trackVoirExemple(projet, scenario, budget_arrondi){
-  track('simulateur_voir_exemple', { projet, scenario, budget_total: budget_arrondi, currency: 'EUR' });
-}
+  function showTab(index) {
+    document.querySelectorAll(".tab-btn").forEach((btn, i) => {
+      btn.classList.toggle("active", i === index);
+    });
+    document.querySelectorAll(".tab-content").forEach((tab, i) => {
+      tab.classList.toggle("active", i === index);
+      tab.classList.remove("fade-in");
+      if (i === index) {
+        setTimeout(() => tab.classList.add("fade-in"), 10);
+      }
+    });
+  }
 
-function trackContactCTA(projet, scenario){
-  track('simulateur_contact_cta', { projet, scenario });
-}
+  /* ====== COMMUNICATION PARENT ====== */
+  function ouvrirContact() {
+    try {
+      window.parent.postMessage({ action: "openContact" }, PARENT_ALLOWED_ORIGIN);
+    } catch(e) {
+      console.warn("postMessage openContact a échoué :", e);
+    }
+  }
 
-/* ✅ Envoi Google Sheets (inchangé) */
-function envoyerDonneesGoogleSheet() {
-  const revenus = document.getElementById("revenus").value;
-  const charges = document.getElementById("charges").value;
-  const age     = document.getElementById("age").value;
-  const apport  = document.getElementById("apport").value;
+  /* ====== TRACKING ====== */
+  function trackDefinirProjet(){
+    const revenus = parseFloat(document.getElementById("revenus").value)||0;
+    const charges = parseFloat(document.getElementById("charges").value)||0;
+    const age     = parseFloat(document.getElementById("age").value)||0;
+    const apport  = parseFloat(document.getElementById("apport").value)||0;
+    track('simulateur_definir_projet', {
+      revenus_annuel: revenus,
+      charges_mensuelles: charges,
+      age: age,
+      apport: apport
+    });
+  }
 
-  const body = new URLSearchParams({ revenus, charges, age, apport });
+  function trackVoirExemple(projet, scenario, budget_arrondi){
+    track('simulateur_voir_exemple', { projet, scenario, budget_total: budget_arrondi, currency: 'EUR' });
+  }
 
-  fetch("https://script.google.com/macros/s/AKfycbz6iMJnuyPxuKyNiHPKhSJRnb5ipFBj5XeBl9eFR3Qv6Uxu-ZXnovnarzTdhUcC3Mmn/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-    body
-  })
-  .then(r => r.text())
-  .then(txt => console.log("✅ Réponse serveur :", txt))
-  .catch(err => console.error("❌ Erreur fetch :", err));
-}
-</script>
+  function trackContactCTA(projet, scenario){
+    track('simulateur_contact_cta', { projet, scenario });
+  }
+
+  /* ====== ENVOI DONNÉES (postMessage + fallback direct) ====== */
+  function envoyerDonnees(dataObj){
+    if (inIframe()) {
+      // Mode iframe : on envoie au parent (WordPress)
+      try {
+        window.parent.postMessage({ type: "simulateur_data", data: dataObj }, PARENT_ALLOWED_ORIGIN);
+        console.log("📤 Données envoyées au parent WordPress :", dataObj);
+      } catch(e){
+        console.error("❌ postMessage vers parent a échoué :", e);
+      }
+    } else {
+      // Fallback test hors iframe : on pousse directement vers Apps Script
+      fetch(GAS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: new URLSearchParams(dataObj)
+      })
+      .then(r => r.text())
+      .then(txt => console.log("✅ Données envoyées à Google Sheets (fallback hors iframe) :", txt))
+      .catch(err => console.error("❌ Erreur d’envoi direct vers Google Sheets :", err));
+    }
+  }
+
+  /* ====== SUBMIT GLOBAL ====== */
+  function handleSubmit(){
+    const revenus = (document.getElementById("revenus").value || "").trim();
+    const charges = (document.getElementById("charges").value || "").trim();
+    const age     = (document.getElementById("age").value || "").trim();
+    const apport  = (document.getElementById("apport").value || "").trim();
+
+    // 1) GA4
+    trackDefinirProjet();
+
+    // 2) Calcul + affichage
+    calculerSimulation();
+
+    // 3) Envoi de données (iframe -> parent, sinon fallback direct)
+    const payload = {
+      revenus, charges, age, apport,
+      ts: new Date().toISOString(),
+      referrer: document.referrer || "",
+      page: location.href
+    };
+    envoyerDonnees(payload);
+  }
+  </script>
 
 </body>
 </html>
