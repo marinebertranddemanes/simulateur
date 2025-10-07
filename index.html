@@ -316,8 +316,26 @@
       page: location.href
     };
     envoyerDonnees(payload);
-  }
-  </script>
 
+  /* ✅ AJOUT POUR ENVOI GOOGLE SHEETS */
+  try {
+    fetch(GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        revenus: revenus,
+        charges: charges,
+        age: age,
+        apport: apport
+      })
+    })
+    .then(res => res.text())
+    .then(r => console.log("📊 Enregistrement Google Sheets réussi :", r))
+    .catch(err => console.error("❌ Erreur envoi vers Google Sheets :", err));
+  } catch (e) {
+    console.error("⚠️ Problème d’envoi Google Sheets :", e);
+  }
+} // ← cette accolade ferme bien handleSubmit()
+</script>
 </body>
 </html>
