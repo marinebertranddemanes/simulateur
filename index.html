@@ -18,92 +18,56 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Montserrat', Arial, sans-serif;
-      background: #f9f9fb;
-    }
-    section { padding: 60px 20px; }
-    h2 {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 40px;
-      color: #0b1d2d;
-      text-align: center;
-    }
-    h3 {
-      text-align: center;
-      color: #0b1d2d;
-      margin-bottom: 20px;
-      font-size: 22px;
-    }
-    .projet-card a { text-decoration: none; }
-    #resultats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-    .tabs { justify-content: center; gap: 10px; margin: 20px 0 30px; flex-wrap: wrap; }
-    .tab-btn {
-      padding: 10px 20px; border: 2px solid #0b1d2d; border-radius: 20px;
-      background: #fff; color: #0b1d2d; font-weight: 600; cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .tab-btn.active { background: #0b1d2d; color: #fff; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    @media (min-width:769px){#resultats{display:grid;}#tabs,#tabContents{display:none!important;}}
-    @media (max-width:768px){#resultats{display:none!important;}#tabs{display:flex;}#tabContents{display:block;}}
-    .fade-in{animation:fadeIn .5s ease-in-out;}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-    .projet-card{
-      background:#f9fdfb;border:2px solid #4CAF50;border-radius:20px;
-      padding:25px;margin-bottom:30px;box-shadow:0 4px 12px rgba(0,0,0,.05);
-      text-align:center;position:relative;
-    }
-    .projet-card.nok-card{background:#fff6f6;border:2px solid #c62828;}
-    .badge{position:absolute;top:-16px;left:50%;transform:translateX(-50%);
-      padding:6px 20px;border-radius:40px;font-size:16px;font-weight:600;
-      display:flex;align-items:center;gap:6px;}
-    .badge::before{content:"●";font-size:14px;}
-    .badge.ok{background:#e8fbe8;border:2px solid #4CAF50;color:#2e7d32;}
-    .badge.ok::before{color:#4CAF50;}
-    .badge.nok{background:#fdeaea;border:2px solid #c62828;color:#b71c1c;}
-    .badge.nok::before{color:#c62828;}
-    .projet-card h4{font-size:20px;font-weight:700;margin:30px 0 20px;color:#0b1d2d;}
-    .projet-budget{
-      background:linear-gradient(135deg,#0b1d2d,#A2B08F);
-      color:#fff;border-radius:14px;padding:20px;font-size:18px;font-weight:400;margin-bottom:20px;
-    }
-    .projet-budget span{display:block;font-size:22px;font-weight:400;margin-top:5px;}
-    .projet-details{
-      background:#f2f4f8;border-left:6px solid #4CAF50;border-radius:10px;
-      padding:12px 16px;margin-bottom:14px;font-size:14px;line-height:1.4;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      min-height:90px;text-align:center;
-    }
-    .projet-details h5{font-size:13px;font-weight:700;margin:0 0 6px 0;color:#0b1d2d;}
-    .projet-details p{margin:2px 0;}
-    .projet-card.nok-card .projet-details{border-left:6px solid #c62828;background:#f7f9fc;text-align:center;}
-    .projet-card .btn-main,.projet-card .btn-alt{
-      display:block;width:calc(100% - 40px);margin:0 auto 12px;padding:12px;
-      border-radius:30px;text-align:center;font-weight:600;transition:.3s;
-    }
-    .btn-main{background:#0b1d2d;color:#fff;text-decoration:none;border:2px solid #0b1d2d;}
-    .btn-main:hover{background:#fff;color:#0b1d2d;}
-    .btn-alt{border:2px solid #0b1d2d;color:#0b1d2d;background:#fff;}
-    .btn-alt:hover{background:#0b1d2d;color:#fff;}
-    @media (max-width:768px){#simForm{grid-template-columns:1fr!important;gap:20px;}#simForm div{grid-column:span 1!important;}}
+    body { margin:0; padding:0; font-family:'Montserrat', Arial, sans-serif; background:#f9f9fb; }
+    section { padding:60px 20px; }
+    h2 { font-size:32px; font-weight:700; margin-bottom:40px; color:#0b1d2d; text-align:center; }
+    h3 { text-align:center; color:#0b1d2d; margin-bottom:20px; font-size:22px; }
+    .projet-card a { text-decoration:none; }
+    #resultats { display:grid; grid-template-columns:repeat(3,1fr); gap:40px; }
+    .tabs { justify-content:center; gap:10px; margin:20px 0 30px; flex-wrap:wrap; display:flex; }
+    .tab-btn{ padding:10px 20px; border:2px solid #0b1d2d; border-radius:20px; background:#fff; color:#0b1d2d; font-weight:600; cursor:pointer; transition:.3s; }
+    .tab-btn.active{ background:#0b1d2d; color:#fff; }
+    .tab-content{ display:none; }
+    .tab-content.active{ display:block; }
+    @media (min-width:769px){ #resultats{display:grid;} #tabs,#tabContents{display:none!important;} }
+    @media (max-width:768px){ #resultats{display:none!important;} #tabs{display:flex;} #tabContents{display:block;} }
+    .fade-in{ animation:fadeIn .5s ease-in-out; }
+    @keyframes fadeIn{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+    .projet-card{ background:#f9fdfb; border:2px solid #4CAF50; border-radius:20px; padding:25px; margin-bottom:30px; box-shadow:0 4px 12px rgba(0,0,0,.05); text-align:center; position:relative; }
+    .projet-card.nok-card{ background:#fff6f6; border:2px solid #c62828; }
+    .badge{ position:absolute; top:-16px; left:50%; transform:translateX(-50%); padding:6px 20px; border-radius:40px; font-size:16px; font-weight:600; display:flex; align-items:center; gap:6px; }
+    .badge::before{ content:"●"; font-size:14px; }
+    .badge.ok{ background:#e8fbe8; border:2px solid #4CAF50; color:#2e7d32; }
+    .badge.ok::before{ color:#4CAF50; }
+    .badge.nok{ background:#fdeaea; border:2px solid #c62828; color:#b71c1c; }
+    .badge.nok::before{ color:#c62828; }
+    .projet-card h4{ font-size:20px; font-weight:700; margin:30px 0 20px; color:#0b1d2d; }
+    .projet-budget{ background:linear-gradient(135deg,#0b1d2d,#A2B08F); color:#fff; border-radius:14px; padding:20px; font-size:18px; font-weight:400; margin-bottom:20px; }
+    .projet-budget span{ display:block; font-size:22px; font-weight:400; margin-top:5px; }
+    .projet-details{ background:#f2f4f8; border-left:6px solid #4CAF50; border-radius:10px; padding:12px 16px; margin-bottom:14px; font-size:14px; line-height:1.4; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:90px; text-align:center; }
+    .projet-details h5{ font-size:13px; font-weight:700; margin:0 0 6px 0; color:#0b1d2d; }
+    .projet-details p{ margin:2px 0; }
+    .projet-card.nok-card .projet-details{ border-left:6px solid #c62828; background:#f7f9fc; text-align:center; }
+    .projet-card .btn-main,.projet-card .btn-alt{ display:block; width:calc(100% - 40px); margin:0 auto 12px; padding:12px; border-radius:30px; text-align:center; font-weight:600; transition:.3s; }
+    .btn-main{ background:#0b1d2d; color:#fff; text-decoration:none; border:2px solid #0b1d2d; }
+    .btn-main:hover{ background:#fff; color:#0b1d2d; }
+    .btn-alt{ border:2px solid #0b1d2d; color:#0b1d2d; background:#fff; }
+    .btn-alt:hover{ background:#0b1d2d; color:#fff; }
+    @media (max-width:768px){ #simForm{ grid-template-columns:1fr!important; gap:20px; } #simForm div{ grid-column:span 1!important; } }
   </style>
 </head>
 <body>
 
   <!-- ✅ Google Tag Manager (BODY) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KZQFS"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KZQFS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- ✅ Fin GTM BODY -->
 
 <section>
   <div style="max-width:1200px; margin:0 auto;">
+
     <h2>Définir mon projet d’investissement locatif</h2>
 
+    <!-- Formulaire -->
     <div style="background:#fff; border:1px solid #ddd; border-radius:16px; padding:40px; margin-bottom:30px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
       <form id="simForm" style="display:grid; grid-template-columns:1fr 1fr; gap:30px; text-align:left;">
         <div>
@@ -123,13 +87,16 @@
           <input type="number" id="apport" placeholder="ex : 20 000" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:6px;">
         </div>
 
+        <!-- ✅ Message RGPD -->
         <div style="grid-column:span 2; text-align:center; margin:6px 0 0; font-size:11px; font-style:italic; color:#777;">
           Vos données sont utilisées uniquement de façon anonyme pour des statistiques. 
           Aucune donnée nominative n’est enregistrée ni envoyée à des tiers.
         </div>
 
+        <!-- ✅ Bouton -->
         <div style="grid-column:span 2; text-align:center; margin-top:2px;">
-          <button type="button" onclick="calculerSimulation(); envoyerDonneesGoogleSheet()" 
+          <button type="button"
+            onclick="trackDefinirProjet(); calculerSimulation(); envoyerDonneesGoogleSheet()"
             style="background:#d9c9a3; color:#0b1d2d; padding:14px 28px; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:16px; margin-top:0;">
             Définir mon projet →
           </button>
@@ -137,13 +104,22 @@
       </form>
     </div>
 
+    <!-- Résultats -->
     <div id="resultats"></div>
     <div id="tabs" class="tabs"></div>
     <div id="tabContents"></div>
+
   </div>
 </section>
 
 <script>
+/* --------- Helpers tracking --------- */
+function track(eventName, params){
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(Object.assign({ event: eventName }, params || {}));
+}
+
+/* --------- Calcul + rendu --------- */
 function calculerSimulation() {
   const revenusAnnuel = parseFloat(document.getElementById("revenus").value) || 0;
   const chargesMensuelles = parseFloat(document.getElementById("charges").value) || 0;
@@ -165,14 +141,17 @@ function calculerSimulation() {
   const container = document.getElementById("resultats");
   const tabs = document.getElementById("tabs");
   const contents = document.getElementById("tabContents");
-  container.innerHTML = ""; tabs.innerHTML = ""; contents.innerHTML = "";
+  container.innerHTML = "";
+  tabs.innerHTML = "";
+  contents.innerHTML = "";
 
   scenarios.forEach((sc, idx) => {
     let colHTML = `<div><h3>${sc.nom}</h3>`;
     projets.forEach((projet) => {
       colHTML += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport);
     });
-    colHTML += `</div>`; container.innerHTML += colHTML;
+    colHTML += `</div>`;
+    container.innerHTML += colHTML;
 
     const tabBtn = document.createElement("button");
     tabBtn.className = "tab-btn" + (idx === 0 ? " active" : "");
@@ -181,77 +160,131 @@ function calculerSimulation() {
     tabs.appendChild(tabBtn);
 
     let html = `<div class="tab-content ${idx === 0 ? "active fade-in" : ""}" id="tab-${idx}"><h3>${sc.nom}</h3>`;
-    projets.forEach((projet) => { html += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport); });
-    html += `</div>`; contents.innerHTML += html;
+    projets.forEach((projet) => {
+      html += getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport);
+    });
+    html += `</div>`;
+    contents.innerHTML += html;
   });
 }
 
 function getProjetHTML(projet, sc, revenusMensuels, chargesMensuelles, apport) {
   const capaciteMensuelle = ((revenusMensuels + projet.loyer*0.7) * 0.35) - chargesMensuelles;
   if (capaciteMensuelle <= 0) {
-    return `<div class="projet-card nok-card">
-      <div class="badge nok">Impossible</div>
-      <h4>${projet.titre}</h4>
-      <div class="projet-details"><p>Votre situation actuelle ne permet pas ce projet.</p></div>
-      <a href="#" onclick="ouvrirContact()" class="btn-alt">
-        Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
-      </a></div>`;
+    return `
+      <div class="projet-card nok-card">
+        <div class="badge nok">Impossible</div>
+        <h4>${projet.titre}</h4>
+        <div class="projet-details">
+          <p>Votre situation actuelle ne permet pas ce projet.</p>
+        </div>
+        <a href="#" onclick="trackContactCTA('${projet.titre}','${sc.nom}'); ouvrirContact(); return false;" class="btn-alt">
+          Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
+        </a>
+      </div>`;
   }
+
   const tauxMensuel = sc.taux / 12;
   const capital = capaciteMensuelle * (1 - Math.pow(1 + tauxMensuel, -sc.duree)) / tauxMensuel;
   const budgetTotal = capital + apport;
+  const budgetArrondi = Math.round(budgetTotal/5000)*5000;
+  const capitalArrondi = Math.round(capital/5000)*5000;
 
   if (budgetTotal >= projet.min * 0.995) {
-    return `<div class="projet-card">
-      <div class="badge ok">Possible</div>
-      <h4>${projet.titre}</h4>
-      <div class="projet-budget">
-        Budget total disponible
-        <span>${(Math.round(budgetTotal/5000)*5000).toLocaleString("fr-FR")} €</span>
-      </div>
-      <div class="projet-details">
-        <h5>DÉTAIL DU FINANCEMENT</h5>
-        <p>Capacité d'emprunt : ${(Math.round(capital/5000)*5000).toLocaleString("fr-FR")} €</p>
-        <p>Votre apport personnel : ${apport.toLocaleString("fr-FR")} €</p>
-      </div>
-      <a href="${projet.pdf}" target="_blank" class="btn-main">Voir un exemple</a>
-      <a href="#" onclick="ouvrirContact()" class="btn-alt">Demander une étude personnalisée au cabinet</a>
-    </div>`;
+    return `
+      <div class="projet-card">
+        <div class="badge ok">Possible</div>
+        <h4>${projet.titre}</h4>
+        <div class="projet-budget">
+          Budget total disponible
+          <span>${budgetArrondi.toLocaleString("fr-FR")} €</span>
+        </div>
+        <div class="projet-details">
+          <h5>DÉTAIL DU FINANCEMENT</h5>
+          <p>Capacité d'emprunt : ${capitalArrondi.toLocaleString("fr-FR")} €</p>
+          <p>Votre apport personnel : ${apport.toLocaleString("fr-FR")} €</p>
+        </div>
+        <a href="${projet.pdf}" target="_blank" class="btn-main"
+           onclick="trackVoirExemple('${projet.titre}','${sc.nom}', ${budgetArrondi});">
+           Voir un exemple
+        </a>
+        <a href="#" onclick="trackContactCTA('${projet.titre}','${sc.nom}'); ouvrirContact(); return false;" class="btn-alt">
+          Demander une étude personnalisée au cabinet
+        </a>
+      </div>`;
   } else {
     const manque = Math.round((projet.min - budgetTotal)/5000)*5000;
-    return `<div class="projet-card nok-card">
-      <div class="badge nok">Impossible</div>
-      <h4>${projet.titre}</h4>
-      <div class="projet-details"><p>Il manquerait ≈ ${manque.toLocaleString("fr-FR")} € pour ce projet</p></div>
-      <a href="#" onclick="ouvrirContact()" class="btn-alt">
-        Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
-      </a></div>`;
+    return `
+      <div class="projet-card nok-card">
+        <div class="badge nok">Impossible</div>
+        <h4>${projet.titre}</h4>
+        <div class="projet-details">
+          <p>Il manquerait ≈ ${manque.toLocaleString("fr-FR")} € pour ce projet</p>
+        </div>
+        <a href="#" onclick="trackContactCTA('${projet.titre}','${sc.nom}'); ouvrirContact(); return false;" class="btn-alt">
+          Vérifions ensemble vos données chiffrées et les solutions qui s’offrent à vous.
+        </a>
+      </div>`;
   }
 }
 
-function showTab(index){
-  document.querySelectorAll(".tab-btn").forEach((btn,i)=>btn.classList.toggle("active",i===index));
-  document.querySelectorAll(".tab-content").forEach((tab,i)=>{
-    tab.classList.toggle("active",i===index);
+function showTab(index) {
+  document.querySelectorAll(".tab-btn").forEach((btn, i) => {
+    btn.classList.toggle("active", i === index);
+  });
+  document.querySelectorAll(".tab-content").forEach((tab, i) => {
+    tab.classList.toggle("active", i === index);
     tab.classList.remove("fade-in");
-    if(i===index)setTimeout(()=>tab.classList.add("fade-in"),10);
+    if (i === index) {
+      setTimeout(() => tab.classList.add("fade-in"), 10);
+    }
   });
 }
 
 /* ✅ Communication avec le parent WordPress */
-function ouvrirContact(){window.parent.postMessage({action:"openContact"},"*");}
+function ouvrirContact() {
+  window.parent.postMessage({ action: "openContact" }, "*");
+}
 
-/* ✅ Envoi vers Google Sheets */
-function envoyerDonneesGoogleSheet(){
-  const revenus=document.getElementById("revenus").value;
-  const charges=document.getElementById("charges").value;
-  const age=document.getElementById("age").value;
-  const apport=document.getElementById("apport").value;
-  const body=new URLSearchParams({revenus,charges,age,apport});
-  fetch("https://script.google.com/macros/s/AKfycbz6iMJnuyPxuKyNiHPKhSJRnb5ipFBj5XeBl9eFR3Qv6Uxu-ZXnovnarzTdhUcC3Mmn/exec",{
-    method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body})
-  .then(r=>r.text()).then(txt=>console.log("✅ Réponse serveur :",txt))
-  .catch(err=>console.error("❌ Erreur fetch :",err));
+/* ✅ Tracking dédié */
+function trackDefinirProjet(){
+  const revenus = parseFloat(document.getElementById("revenus").value)||0;
+  const charges = parseFloat(document.getElementById("charges").value)||0;
+  const age     = parseFloat(document.getElementById("age").value)||0;
+  const apport  = parseFloat(document.getElementById("apport").value)||0;
+  track('simulateur_definir_projet', {
+    revenus_annuel: revenus,
+    charges_mensuelles: charges,
+    age: age,
+    apport: apport
+  });
+}
+
+function trackVoirExemple(projet, scenario, budget_arrondi){
+  track('simulateur_voir_exemple', { projet, scenario, budget_total: budget_arrondi, currency: 'EUR' });
+}
+
+function trackContactCTA(projet, scenario){
+  track('simulateur_contact_cta', { projet, scenario });
+}
+
+/* ✅ Envoi Google Sheets (inchangé) */
+function envoyerDonneesGoogleSheet() {
+  const revenus = document.getElementById("revenus").value;
+  const charges = document.getElementById("charges").value;
+  const age     = document.getElementById("age").value;
+  const apport  = document.getElementById("apport").value;
+
+  const body = new URLSearchParams({ revenus, charges, age, apport });
+
+  fetch("https://script.google.com/macros/s/AKfycbz6iMJnuyPxuKyNiHPKhSJRnb5ipFBj5XeBl9eFR3Qv6Uxu-ZXnovnarzTdhUcC3Mmn/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+    body
+  })
+  .then(r => r.text())
+  .then(txt => console.log("✅ Réponse serveur :", txt))
+  .catch(err => console.error("❌ Erreur fetch :", err));
 }
 </script>
 
