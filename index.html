@@ -114,10 +114,8 @@
 
   <script>
   /* ====== CONFIG ====== */
-  // URL Google Apps Script — utilisée uniquement en fallback quand la page N'EST PAS dans un iframe
   const GAS_URL = "https://script.google.com/macros/s/AKfycbz6iMJnuyPxuKyNiHPKhSJRnb5ipFBj5XeBl9eFR3Qv6Uxu-ZXnovnarzTdhUcC3Mmn/exec";
-  // (Optionnel) sécuriser le postMessage : mets ici ton domaine WordPress exact (ex: "https://www.bertrand-demanes.fr")
-  const PARENT_ALLOWED_ORIGIN = "*"; // remplace par "https://www.bertrand-demanes.fr" si tu veux restreindre
+  const PARENT_ALLOWED_ORIGIN = "*"; // tu peux remplacer par "https://www.bertrand-demanes.fr"
 
   /* ====== HELPERS ====== */
   function inIframe(){ try { return window.self !== window.top; } catch(e){ return true; } }
@@ -283,7 +281,6 @@
   /* ====== ENVOI DONNÉES (postMessage + fallback direct) ====== */
   function envoyerDonnees(dataObj){
     if (inIframe()) {
-      // Mode iframe : on envoie au parent (WordPress)
       try {
         window.parent.postMessage({ type: "simulateur_data", data: dataObj }, PARENT_ALLOWED_ORIGIN);
         console.log("📤 Données envoyées au parent WordPress :", dataObj);
@@ -291,7 +288,6 @@
         console.error("❌ postMessage vers parent a échoué :", e);
       }
     } else {
-      // Fallback test hors iframe : on pousse directement vers Apps Script
       fetch(GAS_URL, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
@@ -310,13 +306,9 @@
     const age     = (document.getElementById("age").value || "").trim();
     const apport  = (document.getElementById("apport").value || "").trim();
 
-    // 1) GA4
     trackDefinirProjet();
-
-    // 2) Calcul + affichage
     calculerSimulation();
 
-    // 3) Envoi de données (iframe -> parent, sinon fallback direct)
     const payload = {
       revenus, charges, age, apport,
       ts: new Date().toISOString(),
