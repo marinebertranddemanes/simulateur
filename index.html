@@ -32,6 +32,11 @@
       font-size: 22px;
     }
 
+    /* Supprime le soulignement de tous les liens du simulateur */
+    .projet-card a {
+      text-decoration: none;
+    }
+
     /* Résultats desktop */
     #resultats {
       display: grid;
@@ -387,13 +392,9 @@ function showTab(index) {
   });
 }
 
+/* ✅ Communication avec le parent WordPress */
 function ouvrirContact() {
-  const boutonContact = document.querySelector('#contact-button');
-  if (boutonContact) {
-    boutonContact.click();
-  } else {
-    console.error("Bouton contact introuvable !");
-  }
+  window.parent.postMessage({ action: "openContact" }, "*");
 }
 
 /* ✅ Fonction pour envoyer les données dans Google Sheets */
