@@ -278,9 +278,9 @@
     track('simulateur_contact_cta', { projet, scenario });
   }
 
-  /* ====== ENVOI DONNÉES (postMessage + Make) ====== */
+ /* ====== ENVOI DONNÉES (postMessage + Make) ====== */
 function envoyerDonnees(dataObj){
-  // 1) On continue d'informer le parent (WordPress) si on est dans une iframe
+  // 1) Envoi au parent (WordPress)
   if (inIframe()) {
     try {
       window.parent.postMessage({ type: "simulateur_data", data: dataObj }, PARENT_ALLOWED_ORIGIN);
@@ -290,24 +290,24 @@ function envoyerDonnees(dataObj){
     }
   }
 
-  // 2) Envoi via proxy CORS (pour contourner le blocage navigateur)
-  const corsProxy = "https://corsproxy.io/?" + encodeURIComponent(MAKE_WEBHOOK);
-  console.log("🌍 URL proxy utilisée :", corsProxy);
+  // 2) Envoi vers Make via proxy alternatif (CORS Any)
+  const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(MAKE_WEBHOOK);
+  console.log("🌍 Proxy utilisé :", proxyUrl);
 
   try {
-    fetch(corsProxy, {
+    fetch(proxyUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dataObj)
     })
-    .then(res => {
-      console.log("✅ Données envoyées à Make via CORS proxy :", dataObj, res.status);
-    })
-    .catch(err => console.error("❌ Erreur d’envoi Make (via proxy) :", err));
+    .then(res => res.text())
+    .then(text => console.log("✅ Données envoyées via proxy allorigins :", text))
+    .catch(err => console.error("❌ Erreur d’envoi Make via proxy allorigins :", err));
   } catch (e) {
-    console.error("⚠️ Erreur envoyerDonnees() (via proxy) :", e);
+    console.error("⚠️ Erreur envoyerDonnees() :", e);
   }
 }
+
 
   /* ====== SUBMIT GLOBAL ====== */
   function handleSubmit(){
