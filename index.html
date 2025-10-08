@@ -288,14 +288,26 @@
         console.error("❌ postMessage vers parent a échoué :", e);
       }
     } else {
-      fetch(GAS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body: new URLSearchParams(dataObj)
-      })
-      .then(r => r.text())
-      .then(txt => console.log("✅ Données envoyées à Google Sheets (fallback hors iframe) :", txt))
-      .catch(err => console.error("❌ Erreur d’envoi direct vers Google Sheets :", err));
+  fetch(GAS_URL, {
+    method: "POST",
+    mode: "no-cors", // 🔥 essentiel pour éviter l'erreur 405 CORS
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      revenus: dataObj.revenus,
+      charges: dataObj.charges,
+      age: dataObj.age,
+      apport: dataObj.apport
+    })
+  })
+  .then(() => {
+    console.log("✅ Données envoyées à Google Sheets (mode no-cors)");
+  })
+  .catch(err => {
+    console.error("❌ Erreur d’envoi vers Google Sheets :", err);
+});
+
     }
   }
 
