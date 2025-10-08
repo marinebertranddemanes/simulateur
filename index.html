@@ -279,31 +279,35 @@
   }
 
   /* ====== ENVOI DONNÉES (postMessage + Make) ====== */
-  function envoyerDonnees(dataObj){
-    // 1) On continue d'informer le parent (WordPress) si on est dans une iframe
-    if (inIframe()) {
-      try {
-        window.parent.postMessage({ type: "simulateur_data", data: dataObj }, PARENT_ALLOWED_ORIGIN);
-        console.log("📤 Données envoyées au parent WordPress :", dataObj);
-      } catch(e){
-        console.warn("⚠️ postMessage vers parent a échoué :", e);
-      }
+function envoyerDonnees(dataObj){
+  // 1) On continue d'informer le parent (WordPress) si on est dans une iframe
+  if (inIframe()) {
+    try {
+      window.parent.postMessage({ type: "simulateur_data", data: dataObj }, PARENT_ALLOWED_ORIGIN);
+      console.log("📤 Données envoyées au parent WordPress :", dataObj);
+    } catch(e){
+      console.warn("⚠️ postMessage vers parent a échoué :", e);
     }
-
-   // 2) Envoi garanti vers Make via proxy CORS (contourne le blocage navigateur)
-try {
-  const corsProxy = "https://corsproxy.io/?" + encodeURIComponent(MAKE_WEBHOOK);
-  fetch(corsProxy, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(dataObj)
-  })
-  .then(() => console.log("✅ Données envoyées à Make via CORS proxy :", dataObj))
-  .catch(err => console.error("❌ Erreur d’envoi Make (via proxy) :", err));
-} catch (e) {
-  console.error("⚠️ Erreur envoyerDonnees() (via proxy) :", e);
-}
   }
+
+  // 2) Envoi via proxy CORS (pour contourner le blocage navigateur)
+  const corsProxy = "https://corsproxy.io/?" + encodeURIComponent(MAKE_WEBHOOK);
+  console.log("🌍 URL proxy utilisée :", corsProxy);
+
+  try {
+    fetch(corsProxy, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dataObj)
+    })
+    .then(res => {
+      console.log("✅ Données envoyées à Make via CORS proxy :", dataObj, res.status);
+    })
+    .catch(err => console.error("❌ Erreur d’envoi Make (via proxy) :", err));
+  } catch (e) {
+    console.error("⚠️ Erreur envoyerDonnees() (via proxy) :", e);
+  }
+}
 
   /* ====== SUBMIT GLOBAL ====== */
   function handleSubmit(){
