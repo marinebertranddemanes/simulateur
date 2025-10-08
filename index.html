@@ -114,7 +114,7 @@
 
   <script>
   /* ====== CONFIG ====== */
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbyfJEUsDzJfAx5zuBFHPA9npgl2XVRm5L4HhwbJcFOQvs25RA-wzzklRFxQYpxj_F4X/exec";
+  const MAKE_WEBHOOK = "https://hook.eu2.make.com/fpp4qgw4ioavqvhu461axwtkpcc";
   const PARENT_ALLOWED_ORIGIN = "*"; // tu peux remplacer par "https://www.bertrand-demanes.fr"
 
   /* ====== HELPERS ====== */
@@ -278,32 +278,29 @@
     track('simulateur_contact_cta', { projet, scenario });
   }
 
-  /* ====== ENVOI DONNÉES (postMessage + fallback direct) ====== */
+  /* ====== ENVOI DONNÉES (postMessage + Make) ====== */
   function envoyerDonnees(dataObj){
+    // 1) On continue d'informer le parent (WordPress) si on est dans une iframe
     if (inIframe()) {
       try {
         window.parent.postMessage({ type: "simulateur_data", data: dataObj }, PARENT_ALLOWED_ORIGIN);
         console.log("📤 Données envoyées au parent WordPress :", dataObj);
       } catch(e){
-        console.error("❌ postMessage vers parent a échoué :", e);
+        console.warn("⚠️ postMessage vers parent a échoué :", e);
       }
-    } else {
- fetch(GAS_URL, {
-  method: "POST",
-  mode: "no-cors", // 👈 obligatoire dans ton cas
-  body: new URLSearchParams({
-    revenus: dataObj.revenus,
-    charges: dataObj.charges,
-    age: dataObj.age,
-    apport: dataObj.apport
-  })
-})
-.then(() => {
-  console.log("✅ Données envoyées à Google Sheets (mode no-cors)");
-})
-.catch(err => {
-  console.error("❌ Erreur d’envoi vers Google Sheets :", err);
-});
+    }
+
+    // 2) Envoi garanti vers Make (remplace totalement Google Sheets/GAS)
+    try {
+      fetch(MAKE_WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataObj)
+      })
+      .then(() => console.log("✅ Données envoyées à Make"))
+      .catch(err => console.error("❌ Erreur d’envoi Make :", err));
+    } catch (e) {
+      console.error("⚠️ Erreur envoyerDonnees() :", e);
     }
   }
 
@@ -323,27 +320,9 @@
       referrer: document.referrer || "",
       page: location.href
     };
-    envoyerDonnees(payload);
 
-  /* ✅ AJOUT POUR ENVOI GOOGLE SHEETS */
-  try {
-    fetch(GAS_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        revenus: revenus,
-        charges: charges,
-        age: age,
-        apport: apport
-      })
-    })
-    .then(res => res.text())
-    .then(r => console.log("📊 Enregistrement Google Sheets réussi :", r))
-    .catch(err => console.error("❌ Erreur envoi vers Google Sheets :", err));
-  } catch (e) {
-    console.error("⚠️ Problème d’envoi Google Sheets :", e);
+    envoyerDonnees(payload);
   }
-} // ← cette accolade ferme bien handleSubmit()
-</script>
+  </script>
 </body>
 </html>
