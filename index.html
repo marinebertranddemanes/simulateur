@@ -114,7 +114,7 @@
 
   <script>
   /* ====== CONFIG ====== */
-  const MAKE_WEBHOOK = "https://hook.eu2.make.com/fpp4qgw4ioavqvhu461axwtkpcc7uwjk";
+  const MAKE_WEBHOOK = "https://api.codetabs.com/v1/proxy?quest=https://hook.eu2.make.com/fpp4qgw4ioavqvhu461axwtkpcc7uwjk";
   const PARENT_ALLOWED_ORIGIN = "*"; // tu peux remplacer par "https://www.bertrand-demanes.fr"
 
   /* ====== HELPERS ====== */
@@ -278,9 +278,9 @@
     track('simulateur_contact_cta', { projet, scenario });
   }
 
- /* ====== ENVOI DONNÉES (postMessage + Make) ====== */
+/* ====== ENVOI DONNÉES (postMessage + Make) ====== */
 function envoyerDonnees(dataObj){
-  // 1) Envoi au parent (WordPress)
+  // 1️⃣ Envoi au parent (WordPress)
   if (inIframe()) {
     try {
       window.parent.postMessage({ type: "simulateur_data", data: dataObj }, PARENT_ALLOWED_ORIGIN);
@@ -290,23 +290,21 @@ function envoyerDonnees(dataObj){
     }
   }
 
-  // 2) Envoi direct vers Make (sans proxy)
-try {
-  fetch(MAKE_WEBHOOK, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(dataObj)
-  })
-  .then(res => {
-    if (!res.ok) throw new Error("HTTP status " + res.status);
-    return res.text();
-  })
-  .then(text => console.log("✅ Données envoyées à Make :", text))
-  .catch(err => console.error("❌ Erreur d’envoi Make :", err));
-} catch (e) {
-  console.error("⚠️ Erreur envoyerDonnees() :", e);
-}
+  // 2️⃣ Envoi direct vers Make via proxy
+  const MAKE_WEBHOOK = "https://api.codetabs.com/v1/proxy?quest=https://hook.eu2.make.com/fpp4qgw4ioavqvhu461axwtkpcc7uwjk";
+
+  try {
+    fetch(MAKE_WEBHOOK, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dataObj)
+    })
+    .then(res => res.text())
+    .then(text => console.log("✅ Données envoyées à Make :", text))
+    .catch(err => console.error("❌ Erreur d’envoi Make :", err));
+  } catch (e) {
+    console.error("⚠️ Erreur envoyerDonnees() :", e);
+  }
 }
 
 
