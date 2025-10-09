@@ -278,7 +278,7 @@
     track('simulateur_contact_cta', { projet, scenario });
   }
 
-/* ====== ENVOI DONNÉES (postMessage + Make via proxy) ====== */
+/* ====== ENVOI DONNÉES (postMessage + Make via Google Script) ====== */
 function envoyerDonnees(dataObj) {
   // 1️⃣ Envoi au parent (WordPress)
   if (inIframe()) {
@@ -290,15 +290,15 @@ function envoyerDonnees(dataObj) {
     }
   }
 
-  // 2️⃣ Envoi direct vers Make via proxy (AllOrigins)
-  const MAKE_WEBHOOK = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://hook.eu2.make.com/fpp4qgw4ioavqvhu461axwtkpcc7uwjk");
+  // 2️⃣ Envoi direct vers Google Apps Script (proxy autorisé)
+  const MAKE_WEBHOOK = "https://script.google.com/macros/s/AKfycbymxjooVcnN1l_LBepgxaOxyURxDGvXAAbHbQCORF5Z8cE4hGOErjWYnor4ooVEq2YbZQ/exec";
 
   try {
     fetch(MAKE_WEBHOOK, {
       method: "POST",
-      mode: "cors", // ✅ indispensable avec AllOrigins
+      mode: "cors",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dataObj)
+      body: JSON.stringify(dataObj),
     })
       .then(res => res.text())
       .then(text => console.log("✅ Données envoyées à Make :", text))
