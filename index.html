@@ -114,7 +114,7 @@
 
   <script>
   /* ====== CONFIG ====== */
-  const MAKE_WEBHOOK = "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://hook.eu2.make.com/fpp4qgw4ioavqvhu461axwtkpcc7uwjk");
+  const MAKE_WEBHOOK = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://hook.eu2.make.com/fpp4qgw4ioavqvhu461axwtkpcc7uwjk");
   const PARENT_ALLOWED_ORIGIN = "*"; // tu peux remplacer par "https://www.bertrand-demanes.fr"
 
   /* ====== HELPERS ====== */
@@ -278,35 +278,35 @@
     track('simulateur_contact_cta', { projet, scenario });
   }
 
-/* ====== ENVOI DONNÉES (postMessage + Make) ====== */
-function envoyerDonnees(dataObj){
+/* ====== ENVOI DONNÉES (postMessage + Make via proxy) ====== */
+function envoyerDonnees(dataObj) {
   // 1️⃣ Envoi au parent (WordPress)
   if (inIframe()) {
     try {
       window.parent.postMessage({ type: "simulateur_data", data: dataObj }, PARENT_ALLOWED_ORIGIN);
-      console.log("📤 Données envoyées au parent WordPress :", dataObj);
-    } catch(e){
+      console.log("📨 Données envoyées au parent WordPress :", dataObj);
+    } catch (e) {
       console.warn("⚠️ postMessage vers parent a échoué :", e);
     }
   }
 
-  // 2️⃣ Envoi direct vers Make via proxy
-  const MAKE_WEBHOOK = "https://api.codetabs.com/v1/proxy?quest=https://hook.eu2.make.com/fpp4qgw4ioavqvhu461axwtkpcc7uwjk";
+  // 2️⃣ Envoi direct vers Make via proxy (AllOrigins)
+  const MAKE_WEBHOOK = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://hook.eu2.make.com/fpp4qgw4ioavqvhu461axwtkpcc7uwjk");
 
   try {
     fetch(MAKE_WEBHOOK, {
       method: "POST",
+      mode: "cors", // ✅ indispensable avec AllOrigins
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dataObj)
     })
-    .then(res => res.text())
-    .then(text => console.log("✅ Données envoyées à Make :", text))
-    .catch(err => console.error("❌ Erreur d’envoi Make :", err));
+      .then(res => res.text())
+      .then(text => console.log("✅ Données envoyées à Make :", text))
+      .catch(err => console.error("❌ Erreur d’envoi Make :", err));
   } catch (e) {
     console.error("⚠️ Erreur envoyerDonnees() :", e);
   }
 }
-
 
   /* ====== SUBMIT GLOBAL ====== */
   function handleSubmit(){
